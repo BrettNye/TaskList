@@ -1,0 +1,24 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="row">
+    <div class="intro-page jumbotron-fluid">
+        <img class="main-img" src="~/images/glenn-carstens-peters-RLw-UC03Gwc-unsplash.jpg" />
+        <div class="overlay"></div>
+        <div class="message text-light">
+            @if (clsUserStatus.loggedIn == true)
+            {
+                <h2>Welcome to your Task List Manager!</h2>
+                <a asp-page="/LoginHome" class="btn btn-primary">Your Lists</a>
+            }
+            else
+            {
+                <h2>Register here to Track and Complete Tasks</h2>
+                <a asp-page="/Register" class="btn btn-primary">Register</a>
+            }
+        </div>
+    </div>
+</div>

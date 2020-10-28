@@ -1,0 +1,50 @@
+﻿@page
+@model Nye_TaskList.Pages.LoginHomeModel
+@{
+    int count = 1;
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>List Number</th>
+            <th>List Name</th>
+            <th></th>
+        </tr>
+    </thead>
+</table>  
+@for (int i = 0; i < clsStaticInfo.UserLists.Count; i++)
+{
+    clsStaticInfo.ListID = clsStaticInfo.UserLists[i].ListID.ToString();
+    clsStaticInfo.ListName = clsStaticInfo.UserLists[i].ListName.ToString();
+
+<form id="ListForm" asp-page-handler="Delete" method="post">
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <label for="id">@count</label>
+                    <input type="hidden" id="id" name="listID" value="@clsStaticInfo.ListID" />
+                </td>
+                <td>
+                    <label>@clsStaticInfo.ListName</label>
+                </td>
+                <td><a asp-page="/ListDetails" class="btn btn-primary">Details</a></td>
+                <td><button type="submit" class="btn btn-primary">Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+    count++;
+}
+<div>
+    <a asp-page="/AddList" class="btn btn-primary">Add a List</a>
+</div>
+<script>
+    function DeleteList() {
+        $.ajax({
+            type: "POST",
+            url: '/LoginHome?handler=Delete'
+        });
+    }
+</script>

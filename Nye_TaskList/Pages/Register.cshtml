@@ -1,0 +1,70 @@
+﻿@page
+@model Nye_TaskList.Pages.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<div id="registerpage" class="row d-flex vh-100 mt-5">
+    <div class="container col-md-2">
+        <section>
+            <h2>Sign in</h2>
+            <hr />
+            <div id="Problem"></div>
+            <form id="Register" class="form" asp-page-handler="Register">
+                <div class="text-danger"></div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input id="username" name="username" class="form-control" />
+                    <div for="username" class="text-danger"></div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" class="form-control" runat="server" />
+                    <div for="email" class="text-danger"></div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" name="Password"
+                           class="form-control" runat="server" />
+                    <div for="password" class="text-danger"></div>
+                </div>
+                <div class="form-group">
+                    <label for="password2">Confirm Password</label>
+                    <input id="password2" type="password" name="Password2"
+                           class="form-control" />
+                    <div for="password2" class="text-danger"></div>
+                </div>
+                <div id="message" class="mt-1 mb-2"></div>
+                <div class="form-group">
+                    <button id="subReg" type="submit" class="btn btn-light" disabled>
+                        Register
+                    </button>
+                </div>
+            </form>
+            <a asp-page="/Register">Don't have an account? Register Here</a>
+        </section>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#password2").keyup(function () {
+            if ($("#password").val() != $("#password2").val()) {
+                $("#message").text("Passwords do not match").css("color", "red");
+            } else {
+                $("#message").text("Passords match").css("color", "green");
+                $("#subReg").removeAttr("disabled");
+            }
+        });
+    });
+
+    function RegisterUser() {
+        $.ajax({
+            type: "POST",
+            url: '/Register?handler=Register',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden"[name="__RequestVerficationToken"]').val());
+            }
+        });
+    }
+</script>

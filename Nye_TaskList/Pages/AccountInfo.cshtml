@@ -1,0 +1,20 @@
+﻿@page
+@model Nye_TaskList.Pages.AccountInfoModel
+@{
+}
+
+<div>
+    @clsUserStatus.currentUser
+    @clsStaticInfo.Email
+    <form id="Delete" method="POST" asp-page-handler="Delete">
+        <button id="delete" type="submit" class="btn btn-primary">Logout</button>
+    </form>
+</div>
+<script>
+    function Logout() {
+        $.ajax({
+            type: "POST",
+            url: '/AccountInfo?handler=Delete'
+        })
+    }
+</script>

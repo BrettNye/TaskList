@@ -1,0 +1,34 @@
+﻿@page
+@model Nye_TaskList.Pages.LoginModel
+@{
+    ViewData["Title"] = "DeleteList";
+}
+
+<div>Are you sure you want to delete list?</div>
+<form id="ListDelete" class="form" method="post" asp-page-handler="Delete">
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Yes</button>
+    </div>
+</form>
+<form id="ListKeep" class="form" method="post" asp-page-handler="Keep">
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">No</button>
+    </div>
+</form>
+<script>
+    function Delete() {
+        $.ajax({
+            type: "POST",
+            url: '/AddList?handler=Delete',
+        });
+    }
+
+    function Keep() {
+        $.ajax({
+            type: "POST",
+            url: '/AddList?handler=Keep',
+        });
+    }
+</script>
+
+
