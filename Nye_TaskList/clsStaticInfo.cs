@@ -20,5 +20,16 @@ namespace Nye_TaskList
         public static List<clsList> UserLists = new List<clsList>();
         public static string ListID { get; set; }
         public static string ListName { get; set; }
+
+        public static bool ListDetails { get; set; }
+
+        public static int ListCounter { get; set; }
+
+        public static List<clsTask> ListTasks = new List<clsTask>();
+
+        public static int TaskID;
+        public static string TaskName;
+        public static DateTime TaskDue;
+        public static char TaskStatus;
     }
 }

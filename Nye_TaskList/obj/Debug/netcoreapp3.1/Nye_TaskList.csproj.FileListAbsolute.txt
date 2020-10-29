@@ -259,3 +259,4 @@ G:\PersonalProjects\To-Do_WebApplication\TaskList\Nye_TaskList\obj\Debug\netcore
 G:\PersonalProjects\To-Do_WebApplication\TaskList\Nye_TaskList\obj\Debug\netcoreapp3.1\Razor\Pages\LoginHome.cshtml.g.cs
 G:\PersonalProjects\To-Do_WebApplication\TaskList\Nye_TaskList\obj\Debug\netcoreapp3.1\Razor\Pages\ERROR.cshtml.g.cs
 G:\PersonalProjects\To-Do_WebApplication\TaskList\Nye_TaskList\obj\Debug\netcoreapp3.1\Razor\Pages\ListDelete.cshtml.g.cs
+G:\PersonalProjects\To-Do_WebApplication\TaskList\Nye_TaskList\obj\Debug\netcoreapp3.1\Razor\Pages\ListDetails.cshtml.g.cs

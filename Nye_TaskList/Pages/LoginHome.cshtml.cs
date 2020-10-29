@@ -23,5 +23,13 @@ namespace Nye_TaskList.Pages
             clsStaticInfo.UserLists = manager.GetUserLists(clsUserStatus.currentUser);
             return Redirect("/LoginHome");
         }
+
+        public IActionResult OnPostDetails()
+        {
+            int temp;
+            Int32.TryParse(Request.Form["ListnumCount"], out temp);
+            clsStaticInfo.ListCounter = temp-1;
+            return Redirect("/ListDetails");
+        }
     }
 }

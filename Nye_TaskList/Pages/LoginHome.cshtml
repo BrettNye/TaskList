@@ -3,7 +3,6 @@
 @{
     int count = 1;
 }
-
 <table>
     <thead>
         <tr>
@@ -29,14 +28,18 @@
                 <td>
                     <label>@clsStaticInfo.ListName</label>
                 </td>
-                <td><a asp-page="/ListDetails" class="btn btn-primary">Details</a></td>
                 <td><button type="submit" class="btn btn-primary">Delete</button></td>
             </tr>
         </tbody>
     </table>
 </form>
+<form id="DetailsForm" asp-page-handler="Details" method="post">
+    <input type="hidden" id="count" name="ListnumCount" value="@count" />
+    <button type="submit" class="btn btn-primary">Details</button>
+</form>
     count++;
 }
+
 <div>
     <a asp-page="/AddList" class="btn btn-primary">Add a List</a>
 </div>
@@ -47,4 +50,6 @@
             url: '/LoginHome?handler=Delete'
         });
     }
+
+    $("#id").val()
 </script>

@@ -79,7 +79,7 @@ namespace Nye_TaskList
             DataSet AllLists;
             List<clsList> UserList = new List<clsList>();
             int iRetVal = 0;
-            string sSQL = "SELECT dbLists.dbTaskList_id, dbTaskListName FROM dbLists INNER JOIN dbUserTaskLists ON dbLists.dbTaskList_id = dbUserTaskLists.dbTaskList_id INNER JOIN dbUser ON dbUserTaskLists.dbUser_id = dbUser.dbUser_id WHERE dbUsername = '" + username + "'";
+            sSQL = "SELECT dbLists.dbTaskList_id, dbTaskListName FROM dbLists INNER JOIN dbUserTaskLists ON dbLists.dbTaskList_id = dbUserTaskLists.dbTaskList_id INNER JOIN dbUser ON dbUserTaskLists.dbUser_id = dbUser.dbUser_id WHERE dbUsername = '" + username + "'";
             AllLists = data.ExecuteSQLStatment(sSQL, ref iRetVal);
             for (int i = 0; i < iRetVal; i++)
             {
@@ -96,6 +96,26 @@ namespace Nye_TaskList
             sSQL = "DELETE FROM dbUserTaskLists WHERE dbUser_id = '" + userID + "' AND dbTaskList_id = '" + listID + "'";
             return data.ExecuteNonQuery(sSQL);
         }
+        
         //SQL for TASK FUNCTIONALITY
+        public List<clsTask> GetListTasks(int listID)
+        {
+            DataSet AllTasks;
+            List<clsTask> ListTasks = new List<clsTask>();
+            int iRetVal = 0;
+            sSQL = "SELECT dbTaskName, dbTaskDue, dbTaskStatus FROM dbTasks t INNER JOIN " +
+                "dbListTask lt ON t.dbTask_id = lt.dbTask_id INNER JOIN dbLists l ON " +
+                "lt.dbTaskList_id = l.dbTaskList_id WHERE l.dbTaskList_id = '" + listID + "'";
+            AllTasks = data.ExecuteSQLStatment(sSQL, ref iRetVal);
+            for (int i = 0; i < iRetVal; i++)
+            {
+                clsTask task = new clsTask();
+                task.TaskID = (int)AllTasks.Tables[0].Rows[i][0];
+                task.TaskName = AllTasks.Tables[0].Rows[i][1].ToString();
+                task.TaskDue = Convert.ToDateTime(AllTasks.Tables[0].Rows[i][2].ToString());
+                task.TaskStatus = Convert.ToChar(AllTasks.Tables[0].Rows[i][3]);
+            }
+            return ListTasks;
+        }
     }
 }
