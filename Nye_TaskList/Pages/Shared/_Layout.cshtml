@@ -24,11 +24,15 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            @if (clsUserStatus.loggedIn == true)
+                            {
+                            <a class="nav-link text-dark" asp-area="" asp-page="/LoginHome">Lists</a>
+                            }
+
                         </li>
                     </ul>
                 </div>
-                @{ if (clsUserStatus.loggedIn == false)
+                @if (clsUserStatus.loggedIn == false)
                     {
                         <div>
                             <a asp-page="/Login" class="btn btn-primary mr-2">Sign in</a>
@@ -42,7 +46,7 @@
                                 <div id="username" class="mr-4 mt-1">Hi, @clsUserStatus.currentUser</div>
                             </a>
                         </div>
-                  } }
+                    } 
             </div>
         </nav>
     </header>

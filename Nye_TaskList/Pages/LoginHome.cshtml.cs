@@ -20,6 +20,7 @@ namespace Nye_TaskList.Pages
             int iListid=0;
             Int32.TryParse(Request.Form["listID"].ToString(), out iListid);
             manager.DeleteUserTaskList(clsStaticInfo.UserID, iListid);
+            manager.DeleteUserList(iListid);
             clsStaticInfo.UserLists = manager.GetUserLists(clsUserStatus.currentUser);
             return Redirect("/LoginHome");
         }

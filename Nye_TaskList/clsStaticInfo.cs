@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Threading.Tasks;
 
 namespace Nye_TaskList
@@ -30,6 +31,12 @@ namespace Nye_TaskList
         public static int TaskID;
         public static string TaskName;
         public static DateTime TaskDue;
+        public static string sTaskDue;
         public static char TaskStatus;
+        public static string TaskDesc;
+
+        public static int Filter = 1;
+
+        public static bool AddFail = false;
     }
 }

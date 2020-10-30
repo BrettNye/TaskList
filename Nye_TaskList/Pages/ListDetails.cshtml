@@ -1,20 +1,108 @@
 ﻿@page
 @model Nye_TaskList.Pages.ListDetailsModel
 @{
+    int temp;
+    int count = 1;
 }
-
-@for (int i = 0; i < clsStaticInfo.ListTasks.Count; i++)
-{ 
-    <form>
-        <table>
-            <thead>
-                <tr>
-                    <th>Task</th>
-                    <th>Task Due Date</th>
-                    <th>Task Status</th>
-                </tr>
-            </thead>
-        </table>
-    </form>
-}
+<div>
+    <a asp-page="/AddTask">Add New Task</a>
+    <div>
+        <form id="FilterForm" name="FilterForm" asp-page-handler="Filter" method="post">
+            <select id="Options" name="Options">
+                @if (clsStaticInfo.Filter == 1)
+                {
+                    <option value="All Tasks" selected="selected">All Tasks</option>
+                    <option value="Pending Tasks">In Progress</option>
+                    <option value="Completed Tasks">Completed</option>
+                }
+                else if (clsStaticInfo.Filter == 2)
+                {
+                    <option value="All Tasks">All Tasks</option>
+                    <option value="Pending Tasks" selected="selected">In Progress</option>
+                    <option value="Completed Tasks">Completed</option>
+                }
+                else if (clsStaticInfo.Filter == 3)
+                {
+                <option value="All Tasks">All Tasks</option>
+                <option value="Pending Tasks">In Progress</option>
+                <option value="Completed Tasks" selected="selected">Completed</option>
+                }
+            </select>
+            <button id="filter-form-submit" type="submit" class="btn btn-primary">Filter</button>
+        </form>
+    </div>
+</div>
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Task Due Date</th>
+                <th>Task Status</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+    @for (int i = 0; i < clsStaticInfo.ListTasks.Count; i++)
+    {
+        Int32.TryParse(clsStaticInfo.ListTasks[i].TaskID.ToString(), out temp);
+        clsStaticInfo.TaskID = temp;
+        clsStaticInfo.TaskName = clsStaticInfo.ListTasks[i].TaskName.ToString();
+        clsStaticInfo.TaskDue = clsStaticInfo.ListTasks[i].TaskDue;
+        clsStaticInfo.TaskStatus = clsStaticInfo.ListTasks[i].TaskStatus;
+        clsStaticInfo.TaskDesc = clsStaticInfo.ListTasks[i].TaskDesc;
+        <div>
+            <form id="TaskView" name="TaskView" asp-page-handler="Delete" method="post">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label>@count</label>
+                                <input type="hidden" id="ID" name="ID" value="@clsStaticInfo.TaskID" />
+                            </td>
+                            <td>
+                                <label>@clsStaticInfo.TaskName</label>
+                            </td>
+                            <td>
+                                <label>@clsStaticInfo.TaskDue.ToShortDateString()</label>
+                            </td>
+                            <td>
+                                <label>@clsStaticInfo.TaskDesc</label>
+                            </td>
+                            <td>
+                                @if (@clsStaticInfo.TaskStatus == 'C')
+                                {
+                                    <label>Complete</label>
+                                }
+                                else
+                                {
+                                    <label>In Progress</label>
+                                }
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <div>
+            <form id="CompleteForm" asp-page-handler="Complete" method="post">
+                <input type="hidden" id="id" value="@clsStaticInfo.TaskID" />
+                <button type="submit" class="btn btn-primary">Complete</button>
+            </form>
+        </div>
+        <div>
+            <form id="EditForm" asp-page-handler="Edit" method="post">
+                <input type="hidden" id="id" value="@clsStaticInfo.TaskID" />
+                <input type="hidden" id="name" value="@clsStaticInfo.TaskName" />
+                <input type="hidden" id="due" value="@clsStaticInfo.TaskDue.ToShortDateString()" />
+                <input type="hidden" id="desc" value="@clsStaticInfo.TaskDesc" />
+                <input type="hidden" id="counter" name="counter" value="@count" />
+                <button type="submit" class="btn btn-primary">Edit</button>
+            </form>
+        </div>
+        count++;
+    }
 

@@ -11,6 +11,7 @@ namespace Nye_TaskList
         private string sTaskName;
         private DateTime dTaskDue;
         private char cTaskStatus;
+        private string sTaskDesc;
 
         public int TaskID
         {
@@ -34,6 +35,12 @@ namespace Nye_TaskList
         {
             get { return cTaskStatus; }
             set { cTaskStatus = value; }
+        }
+
+        public string TaskDesc
+        {
+            get { return sTaskDesc; }
+            set { sTaskDesc = value; }
         }
     }
 }

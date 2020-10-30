@@ -1,47 +1,61 @@
 ﻿@page
 @model Nye_TaskList.Pages.LoginHomeModel
 @{
+    ViewData["Title"] = "LoginHome";
     int count = 1;
 }
-<table>
-    <thead>
-        <tr>
-            <th>List Number</th>
-            <th>List Name</th>
-            <th></th>
-        </tr>
-    </thead>
-</table>  
-@for (int i = 0; i < clsStaticInfo.UserLists.Count; i++)
-{
-    clsStaticInfo.ListID = clsStaticInfo.UserLists[i].ListID.ToString();
-    clsStaticInfo.ListName = clsStaticInfo.UserLists[i].ListName.ToString();
+<div class="container-fluid mt-5">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="min-width:100px">List Number</th>
+                        <th style="width:600px" class="text-center">List Name</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    @for (int i = 0; i < clsStaticInfo.UserLists.Count; i++)
+    {
+        clsStaticInfo.ListID = clsStaticInfo.UserLists[i].ListID.ToString();
+        clsStaticInfo.ListName = clsStaticInfo.UserLists[i].ListName.ToString();
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <div class="row vw-100">
+                    <form id="ListForm" asp-page-handler="Delete" method="post">
+                        <table class="table m-0 pb-0">
+                            <tbody>
+                                <tr style="max-height:50px">
+                                    <td style="min-width:150px">
+                                        <label for="id">@count</label>
+                                        <input type="hidden" id="id" name="listID" value="@clsStaticInfo.ListID" />
+                                    </td>
+                                    <td style="min-width:600px">
+                                        <label>@clsStaticInfo.ListName</label>
+                                    </td>
+                                    <td style="min-width:200px"><button type="submit" class="btn btn-primary m-0">Delete</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                    <form id="DetailsForm" asp-page-handler="Details" method="post" class="m-0 p-0">
+                        <input type="hidden" id="count" name="ListnumCount" value="@count" />
+                        <hr class="text-info p-0 mb-1 m-0" />
+                        <button type="submit" class="btn btn-primary m-0 mb-3 pt-1">Details</button>
+                    </form>
+                </div>
+            </div>
+            </div>
+            count++;
+        }
 
-<form id="ListForm" asp-page-handler="Delete" method="post">
-    <table>
-        <tbody>
-            <tr>
-                <td>
-                    <label for="id">@count</label>
-                    <input type="hidden" id="id" name="listID" value="@clsStaticInfo.ListID" />
-                </td>
-                <td>
-                    <label>@clsStaticInfo.ListName</label>
-                </td>
-                <td><button type="submit" class="btn btn-primary">Delete</button></td>
-            </tr>
-        </tbody>
-    </table>
-</form>
-<form id="DetailsForm" asp-page-handler="Details" method="post">
-    <input type="hidden" id="count" name="ListnumCount" value="@count" />
-    <button type="submit" class="btn btn-primary">Details</button>
-</form>
-    count++;
-}
-
-<div>
-    <a asp-page="/AddList" class="btn btn-primary">Add a List</a>
+<div class="row mt-5 justify-content-center" style="min-height:300px;">
+    <div class="col-8 p-0">
+        <a asp-page="/AddList" class="btn btn-primary m-0">Add a List</a>
+    </div>
+</div>
 </div>
 <script>
     function DeleteList() {
@@ -50,6 +64,4 @@
             url: '/LoginHome?handler=Delete'
         });
     }
-
-    $("#id").val()
 </script>

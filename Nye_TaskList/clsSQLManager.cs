@@ -93,7 +93,13 @@ namespace Nye_TaskList
 
         public int DeleteUserTaskList(int userID, int listID)
         {
-            sSQL = "DELETE FROM dbUserTaskLists WHERE dbUser_id = '" + userID + "' AND dbTaskList_id = '" + listID + "'";
+            sSQL = "DELETE FROM dbUserTaskLists WHERE dbTaskList_id = '" + listID + "' AND dbUser_id = '" + userID + "'";
+            return data.ExecuteNonQuery(sSQL);
+        }
+
+        public int DeleteUserList(int listID)
+        {
+            sSQL = "DELETE FROM dbLists WHERE dbTaskList_id = '" + listID + "'";
             return data.ExecuteNonQuery(sSQL);
         }
         
@@ -103,19 +109,123 @@ namespace Nye_TaskList
             DataSet AllTasks;
             List<clsTask> ListTasks = new List<clsTask>();
             int iRetVal = 0;
-            sSQL = "SELECT dbTaskName, dbTaskDue, dbTaskStatus FROM dbTasks t INNER JOIN " +
+            int temp;
+            sSQL = "SELECT t.dbTask_id, dbTaskName, dbTaskDue, dbTaskStatus, dbDescription FROM dbTasks t INNER JOIN " +
                 "dbListTask lt ON t.dbTask_id = lt.dbTask_id INNER JOIN dbLists l ON " +
                 "lt.dbTaskList_id = l.dbTaskList_id WHERE l.dbTaskList_id = '" + listID + "'";
             AllTasks = data.ExecuteSQLStatment(sSQL, ref iRetVal);
             for (int i = 0; i < iRetVal; i++)
             {
                 clsTask task = new clsTask();
-                task.TaskID = (int)AllTasks.Tables[0].Rows[i][0];
+                Int32.TryParse(AllTasks.Tables[0].Rows[i][0].ToString(), out temp); 
+                task.TaskID = temp;
                 task.TaskName = AllTasks.Tables[0].Rows[i][1].ToString();
                 task.TaskDue = Convert.ToDateTime(AllTasks.Tables[0].Rows[i][2].ToString());
                 task.TaskStatus = Convert.ToChar(AllTasks.Tables[0].Rows[i][3]);
+                task.TaskDesc = AllTasks.Tables[0].Rows[i][4].ToString();
+                ListTasks.Add(task);
             }
             return ListTasks;
+        }
+
+        public List<clsTask> GetListTaskPending(int listID)
+        {
+            DataSet AllTasks;
+            List<clsTask> ListTasks = new List<clsTask>();
+            int iRetVal = 0;
+            int temp;
+            sSQL = "SELECT t.dbTask_id, dbTaskName, dbTaskDue, dbTaskStatus, dbDescription FROM dbTasks t INNER JOIN " +
+                "dbListTask lt ON t.dbTask_id = lt.dbTask_id INNER JOIN dbLists l ON " +
+                "lt.dbTaskList_id = l.dbTaskList_id WHERE l.dbTaskList_id = '" + listID + "' AND dbTaskStatus = 'P'";
+            AllTasks = data.ExecuteSQLStatment(sSQL, ref iRetVal);
+            for (int i = 0; i < iRetVal; i++)
+            {
+                clsTask task = new clsTask();
+                Int32.TryParse(AllTasks.Tables[0].Rows[i][0].ToString(), out temp);
+                task.TaskID = temp;
+                task.TaskName = AllTasks.Tables[0].Rows[i][1].ToString();
+                task.TaskDue = Convert.ToDateTime(AllTasks.Tables[0].Rows[i][2].ToString());
+                task.TaskStatus = Convert.ToChar(AllTasks.Tables[0].Rows[i][3]);
+                task.TaskDesc = AllTasks.Tables[0].Rows[i][4].ToString();
+                ListTasks.Add(task);
+            }
+            return ListTasks;
+        }
+
+        public List<clsTask> GetListTaskCompleted(int listID)
+        {
+            DataSet AllTasks;
+            List<clsTask> ListTasks = new List<clsTask>();
+            int iRetVal = 0;
+            int temp;
+            sSQL = "SELECT t.dbTask_id, dbTaskName, dbTaskDue, dbTaskStatus, dbDescription FROM dbTasks t INNER JOIN " +
+                "dbListTask lt ON t.dbTask_id = lt.dbTask_id INNER JOIN dbLists l ON " +
+                "lt.dbTaskList_id = l.dbTaskList_id WHERE l.dbTaskList_id = '" + listID + "' AND dbTaskStatus = 'C'";
+            AllTasks = data.ExecuteSQLStatment(sSQL, ref iRetVal);
+            for (int i = 0; i < iRetVal; i++)
+            {
+                clsTask task = new clsTask();
+                Int32.TryParse(AllTasks.Tables[0].Rows[i][0].ToString(), out temp);
+                task.TaskID = temp;
+                task.TaskName = AllTasks.Tables[0].Rows[i][1].ToString();
+                task.TaskDue = Convert.ToDateTime(AllTasks.Tables[0].Rows[i][2].ToString());
+                task.TaskStatus = Convert.ToChar(AllTasks.Tables[0].Rows[i][3]);
+                task.TaskDesc = AllTasks.Tables[0].Rows[i][4].ToString();
+                ListTasks.Add(task);
+            }
+            return ListTasks;
+        }
+
+        public int InsertTask(string Name, DateTime Due, string Desc)
+        {
+            sSQL = "INSERT INTO dbTasks " +
+                    "(dbTaskName, dbTaskDue, dbTaskStatus, dbDescription) " +
+                    "VALUES " +
+                    "('" + Name + "', '" + Due + "', 'P', '" + Desc + "')";
+            return data.ExecuteNonQuery(sSQL);
+        }
+
+        public int InsertListTask(int TaskID, int ListID)
+        {
+            sSQL = "INSERT INTO dbListTask" +
+                "(dbTask_id, dbTaskList_id)" +
+                "VALUES" +
+                "('" + TaskID + "', '" + ListID + "')";
+            return data.ExecuteNonQuery(sSQL);
+        }
+
+        public string GetTaskID(string Name)
+        {
+            sSQL = "SELECT dbTask_id FROM dbTasks WHERE dbTaskName = '" + Name + "'";
+            return data.ExecuteScalarSQL(sSQL);
+        }
+
+        public int DeleteListTask(int listID, int taskID)
+        {
+            sSQL = "DELETE FROM dbListTask WHERE dbTaskList_id = '" + listID + "' AND dbTask_id = '" + taskID + "'";
+            return data.ExecuteNonQuery(sSQL);
+        }
+
+        public int DeleteTask(int taskID)
+        {
+            sSQL = "DELETE FROM dbTasks WHERE dbTask_id = '" + taskID + "'";
+            return data.ExecuteNonQuery(sSQL);
+        }
+
+        public int UpdateStatus(int taskID)
+        {
+            sSQL = "UPDATE dbTasks SET dbTaskStatus = 'C' WHERE dbTask_id = '" + taskID + "'";
+            return data.ExecuteNonQuery(sSQL);
+        }
+
+        public int UpdateTask(int taskID, string taskName, string taskDesc, DateTime dueDate)
+        {
+            sSQL = "UPDATE dbTasks " +
+                "SET " +
+                "dbTaskName = '" + taskName + "', " +
+                "dbDescription = '" + taskDesc + "', " +
+                "dbTaskDue = '" + dueDate + "'";
+            return data.ExecuteNonQuery(sSQL);
         }
     }
 }
