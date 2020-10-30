@@ -16,6 +16,12 @@ namespace Nye_TaskList.Pages
         {
         }
 
+        /// <summary>
+        /// Request form input, match against database values, 
+        /// if match, log user in
+        /// if fail, notify user and allow another try
+        /// </summary>
+        /// <returns>/IndexPG on success, /LoginFailedPG on fail</returns>
         public IActionResult OnPostLogin()
         {
             string username = Request.Form["username"].ToString();

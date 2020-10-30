@@ -20,6 +20,11 @@ namespace Nye_TaskList.Pages
         {
         }
 
+        /// <summary>
+        /// Get user input, generate salt, hash salt and password,
+        /// Verify Username is not already taken
+        /// </summary>
+        /// <returns>on success /IndexPG, on fail /AlreadyInUsePG</returns>
         public IActionResult OnPostRegister()
         {
             string username = Request.Form["username"].ToString();
@@ -33,10 +38,7 @@ namespace Nye_TaskList.Pages
                 int count = manager.InsertUser(username, HashedPassword, salt, Email);
                 if (count == 1)
                 {
-                    clsUserStatus.loggedIn = true;
                     clsUserStatus.registered = true;
-                    clsUserStatus.currentUser = username;
-                    clsStaticInfo.Email = Email;
                 }
                 return Redirect("/Index");
             }

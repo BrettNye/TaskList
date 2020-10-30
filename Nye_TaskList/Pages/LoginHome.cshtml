@@ -10,8 +10,8 @@
             <table>
                 <thead>
                     <tr>
-                        <th style="min-width:100px">List Number</th>
-                        <th style="width:600px" class="text-center">List Name</th>
+                        <th style="width:125px" class="text-center"><h3></h3></th>
+                        <th style="width:625px" class="text-center"><h3>List Name</h3></th>
                     </tr>
                 </thead>
             </table>
@@ -27,23 +27,23 @@
                     <form id="ListForm" asp-page-handler="Delete" method="post">
                         <table class="table m-0 pb-0">
                             <tbody>
-                                <tr style="max-height:50px">
-                                    <td style="min-width:150px">
+                                <tr>
+                                    <td style="min-width:150px" class="text-center">
                                         <label for="id">@count</label>
                                         <input type="hidden" id="id" name="listID" value="@clsStaticInfo.ListID" />
                                     </td>
-                                    <td style="min-width:600px">
+                                    <td style="min-width:600px" class="text-center">
                                         <label>@clsStaticInfo.ListName</label>
                                     </td>
-                                    <td style="min-width:200px"><button type="submit" class="btn btn-primary m-0">Delete</button></td>
+                                    <td style="min-width:200px" class="text-center"><button type="submit" class="btn btn-primary m-0">Delete</button></td>
                                 </tr>
                             </tbody>
                         </table>
                     </form>
                     <form id="DetailsForm" asp-page-handler="Details" method="post" class="m-0 p-0">
                         <input type="hidden" id="count" name="ListnumCount" value="@count" />
-                        <hr class="text-info p-0 mb-1 m-0" />
-                        <button type="submit" class="btn btn-primary m-0 mb-3 pt-1">Details</button>
+                        <hr class="text-info p-0 mb-2 m-0" />
+                        <button type="submit" class="btn btn-primary m-0 mb-3 mt-1">Details</button>
                     </form>
                 </div>
             </div>
@@ -51,11 +51,11 @@
             count++;
         }
 
-<div class="row mt-5 justify-content-center" style="min-height:300px;">
-    <div class="col-8 p-0">
-        <a asp-page="/AddList" class="btn btn-primary m-0">Add a List</a>
+    <div class="row mt-5 justify-content-center" style="min-height:300px;">
+        <div class="col-8 p-0">
+            <a asp-page="/AddList" class="btn btn-primary m-0">Add a List</a>
+        </div>
     </div>
-</div>
 </div>
 <script>
     function DeleteList() {

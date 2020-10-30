@@ -5,19 +5,32 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Reflection;
 using System.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Nye_TaskList
 {
     public class clsDataAccess
     {
+        /// <summary>
+        /// Stores Connection string to database
+        /// </summary>
         private string sConnectionString;
         
+        /// <summary>
+        /// Build Connection String
+        /// </summary>
+        /// <returns></returns>
         private static string GetConnectionString()
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder("Data Source = task-list-project.czca6afzbdvq.us-east-2.rds.amazonaws.com,1433; Initial Catalog = dbTaskList; Integrated Security = False; Persist Security Info = True; User ID = admin; Password = $Steelisstrong32;");
             return builder.ToString();
         }
 
+        /// <summary>
+        /// Executes A Non Query
+        /// </summary>
+        /// <param name="sSQL"></param>
+        /// <returns>INumRows</returns>
         public int ExecuteNonQuery(string sSQL)
         {
             try
@@ -42,6 +55,11 @@ namespace Nye_TaskList
             }
         }
 
+        /// <summary>
+        /// Execute a scalar statement
+        /// </summary>
+        /// <param name="sSQL"></param>
+        /// <returns>obj.tostring</returns>
         public string ExecuteScalarSQL(string sSQL)
         {
             try { 
@@ -75,6 +93,12 @@ namespace Nye_TaskList
             }
         }
 
+        /// <summary>
+        /// Executes SQL Statements
+        /// </summary>
+        /// <param name="sSQL"></param>
+        /// <param name="iRetVal"></param>
+        /// <returns>Dataset ds</returns>
         public DataSet ExecuteSQLStatment(string sSQL, ref int iRetVal)
         {
             try

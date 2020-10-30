@@ -15,6 +15,10 @@ namespace Task_List
     {
         private static byte[] salt = new byte[128 / 8];
 
+        /// <summary>
+        /// Generate Salt
+        /// </summary>
+        /// <returns></returns>
         public byte[] GenerateSalt()
         {
             if (salt == null)
@@ -27,6 +31,11 @@ namespace Task_List
             return salt;
         }
 
+        /// <summary>
+        /// Hash Password and salt together
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns>Hashed Password</returns>
         public string ProtectPass(string password)
         {
             GenerateSalt();

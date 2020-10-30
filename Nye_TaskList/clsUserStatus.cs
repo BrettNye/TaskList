@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Nye_TaskList
 {
+    /// <summary>
+    /// Holds currentUser name and status
+    /// </summary>
     public class clsUserStatus
     {
         public static bool loggedIn { get; set; }

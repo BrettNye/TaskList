@@ -12,9 +12,15 @@ namespace Nye_TaskList.Pages
         clsSQLManager manager = new clsSQLManager();
         public void OnGet()
         {
+            //Get list of UserLists
             clsStaticInfo.UserLists = manager.GetUserLists(clsUserStatus.currentUser);
         }
 
+        /// <summary>
+        /// Delete List Item and UserTaskList Item from database
+        /// Update UserLists
+        /// </summary>
+        /// <returns></returns>
         public IActionResult OnPostDelete()
         {
             int iListid=0;
@@ -25,6 +31,10 @@ namespace Nye_TaskList.Pages
             return Redirect("/LoginHome");
         }
 
+        /// <summary>
+        /// Get counter for selected item
+        /// </summary>
+        /// <returns>/ListDetailsPG</returns>
         public IActionResult OnPostDetails()
         {
             int temp;

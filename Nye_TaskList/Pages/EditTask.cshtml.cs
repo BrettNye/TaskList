@@ -12,6 +12,7 @@ namespace Nye_TaskList.Pages
         clsSQLManager manager = new clsSQLManager();
         public void OnGet()
         {
+            //Get Variables for Selected Task
             clsStaticInfo.TaskID = clsStaticInfo.ListTasks[clsStaticInfo.ListCounter].TaskID;
             clsStaticInfo.TaskName = clsStaticInfo.ListTasks[clsStaticInfo.ListCounter].TaskName;
             clsStaticInfo.TaskDesc = clsStaticInfo.ListTasks[clsStaticInfo.ListCounter].TaskDesc;
@@ -21,14 +22,11 @@ namespace Nye_TaskList.Pages
         public IActionResult OnPostEdit()
         {
             int id;
-            Int32.TryParse(Request.Form["id"], out id);
+            Int32.TryParse(Request.Form["taskID"], out id);
             string name = Request.Form["taskname"].ToString();
             string desc = Request.Form["taskDesc"].ToString();
             DateTime due = DateTime.Now;
-            if (name == "")
-            {
-                name = clsStaticInfo.TaskName;
-            }
+            //If user does not update a value keep value the same
             if(desc == "")
             {
                 desc = clsStaticInfo.TaskDesc;
@@ -47,6 +45,14 @@ namespace Nye_TaskList.Pages
                     return Redirect("/TaskFailed");
                 }
             }
+            if(name == "")
+            {
+                //If name is left blank update without it
+                manager.UpdateTask(id, desc, due);
+                return Redirect("/ListDetails");
+
+            }
+            //Update task with user input
             manager.UpdateTask(id, name, desc, due);
             return Redirect("/ListDetails");
         }

@@ -1,20 +1,13 @@
 ﻿@page
 @model Nye_TaskList.Pages.AccountInfoModel
 @{
+    ViewData["Title"] = "AccountInfo";
 }
 
 <div>
-    @clsUserStatus.currentUser
-    @clsStaticInfo.Email
+    <div class="d-flex"><h4>Username: </h4><h4 class="ml-4">@clsUserStatus.currentUser</h4></div>
+    <div class="d-flex"><h4>Email: </h4><h4 class="ml-4">@clsStaticInfo.Email</h4></div>
     <form id="Delete" method="POST" asp-page-handler="Delete">
         <button id="delete" type="submit" class="btn btn-primary">Logout</button>
     </form>
 </div>
-<script>
-    function Logout() {
-        $.ajax({
-            type: "POST",
-            url: '/AccountInfo?handler=Delete'
-        })
-    }
-</script>

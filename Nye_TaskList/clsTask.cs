@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Nye_TaskList
 {
+    /// <summary>
+    /// A model for dbTasks
+    /// </summary>
     public class clsTask
     {
         private int iTaskID;

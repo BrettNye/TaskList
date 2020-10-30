@@ -15,10 +15,11 @@ namespace Nye_TaskList.Pages
 
         public IActionResult OnPostDelete()
         {
+            //Reset Static Variables
             clsUserStatus.currentUser = "";
             clsStaticInfo.Email = "";
-            clsUserStatus.loggedIn = false;
-            return Redirect("/Index");
+            clsUserStatus.loggedIn = false; //Log User Out
+            return Redirect("/Index");      //Redirect to homepage to login/register
 
         }
     }

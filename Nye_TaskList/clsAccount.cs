@@ -5,8 +5,12 @@ using System.Threading.Tasks;
 
 namespace Nye_TaskList
 {
+    /// <summary>
+    /// Model to database dbUser Table
+    /// </summary>
     public class clsAccount
     {
+
         private int iUser_id;
         private string sUsername;
         private string sEmail;

@@ -13,6 +13,7 @@ namespace Nye_TaskList.Pages
         clsSQLManager manager = new clsSQLManager();
         public void OnGet()
         {
+            //If filter value is 1 it will return all tasks in list
             if (clsStaticInfo.Filter == 1)
             {
                 int ListID;
@@ -21,6 +22,11 @@ namespace Nye_TaskList.Pages
             }
         }
 
+        /// <summary>
+        /// OnPost will request task id, retrieve list id and delete task and listtask item
+        /// And update list of listtasks
+        /// </summary>
+        /// <returns>/ListDetailsPG</returns>
         public IActionResult OnPostDelete()
         {
             int iTaskID = 0;
@@ -33,12 +39,23 @@ namespace Nye_TaskList.Pages
             return Redirect("/ListDetails");
         }
 
+        /// <summary>
+        /// Updates status to complete
+        /// </summary>
+        /// <returns>/ListDetailsPG</returns>
         public IActionResult OnPostComplete()
         {
             manager.UpdateStatus(clsStaticInfo.TaskID);
             return Redirect("/ListDetails");
         }
 
+        /// <summary>
+        /// Get input from form dropdown to determine value to filter for
+        /// All 1,
+        /// Pending 2,
+        /// Complete 3
+        /// </summary>
+        /// <returns>/ListDetailsPG</returns>
         public IActionResult OnPostFilter()
         {
             string Filter = Request.Form["Options"].ToString();
@@ -64,6 +81,10 @@ namespace Nye_TaskList.Pages
             return Redirect("/ListDetails");
         }
 
+        /// <summary>
+        /// Grab list counter and redirect
+        /// </summary>
+        /// <returns>/EditTaskPG</returns>
         public IActionResult OnPostEdit()
         {
             int temp;

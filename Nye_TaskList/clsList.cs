@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Nye_TaskList
 {
+    /// <summary>
+    /// Model for database dbLists
+    /// </summary>
     public class clsList
     {
         private int iListID;

@@ -16,16 +16,17 @@ namespace Nye_TaskList.Pages
 
         public IActionResult OnPostAdd()
         {
-            clsStaticInfo.AddFail = false;
-            string name = Request.Form["taskName"].ToString();
-            DateTime due = DateTime.Now;
-            string desc = Request.Form["taskDesc"].ToString();
-            manager.InsertTask(name, due, desc);
-            string taskID = manager.GetTaskID(name);
-            int temp;
-            int temp2;
+            clsStaticInfo.AddFail = false;                          //Reset AddFail variable
+            string name = Request.Form["taskName"].ToString();      //Request taskname from form
+            DateTime due = DateTime.Now;                            //Set due variable to default;
+            string desc = Request.Form["taskDesc"].ToString();      //Request taskdescription from form
+            manager.InsertTask(name, due, desc);                    //Insert a task into dbTasks
+            string taskID = manager.GetTaskID(name);                //Retrieve taskID using taskName
+            int temp;   //Stores taskID temporarily
+            int temp2;  //Stores ListID temporarily
             Int32.TryParse(taskID, out temp);
             Int32.TryParse(clsStaticInfo.ListID, out temp2);
+            //Loop list to ensure task name is unique
             for (int i = 0; i < clsStaticInfo.ListTasks.Count; i++)
             {
                 if (clsStaticInfo.ListTasks[i].TaskName == name)
@@ -34,16 +35,18 @@ namespace Nye_TaskList.Pages
                     return Redirect("/TaskFailed");
                 }
             }
+            //If form not included set to clsStaticInfo.TaskDue
             if (Request.Form["taskDue"] == "")
             {
                 due = clsStaticInfo.TaskDue;
             }
+            //Else request DateTime from form
             else
-            {
-                Convert.ToDateTime(Request.Form["taskDue"]);
+            { 
+                due = Convert.ToDateTime(Request.Form["taskDue"]);
             }
-            clsStaticInfo.AddFail = false;
-            manager.InsertListTask(temp, temp2);
+            clsStaticInfo.AddFail = false; //Set if Add did not fail
+            manager.InsertListTask(temp, temp2); //Insert a ListTask
             return Redirect("/ListDetails");
         }
     }
